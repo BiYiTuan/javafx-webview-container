@@ -2,24 +2,26 @@ package com.rubricode.javafxwebcontainer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class FXMLController implements Initializable {
-    
     @FXML
-    private Label label;
-    
+    private WebView ts_web_container;
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private MenuBar ts_menubar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        ts_menubar.setUseSystemMenuBar(true);
+        WebEngine engine = ts_web_container.getEngine();
+        engine.load("http://localhost:3000");
+    }  
+    
+    public void setApplication(MainApp app) {
+    
+    }
 }
