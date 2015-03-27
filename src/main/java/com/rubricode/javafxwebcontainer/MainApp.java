@@ -1,6 +1,6 @@
 package com.rubricode.javafxwebcontainer;
 
-import com.rubricode.javafxwebcontainer.api.GreetingResource;
+import static spark.Spark.*;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -8,9 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.glassfish.grizzly.http.server.*;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 
 public class MainApp extends Application {
@@ -35,15 +35,27 @@ public class MainApp extends Application {
         primarystage.setScene(scene);
         primarystage.show();
     }
+    
     public void startServer() throws IOException {
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer( java.net.URI.create("http://localhost:7000/api"), new ResourceConfig(GreetingResource.class));
-
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("src/main/webapp");
-        server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/");
-
-        System.in.read();
-        server.stop();
+        staticFileLocation("/webapp/");
+        get("/maven", new Route() {
+            @Override
+            public Object handle(Request req, Response res) throws Exception {
+                return "Hello Maven";
+            }
+        });
     }
+    
+    public void terminate() {
+        try {
+            stop();
+        } catch(Exception e) {
+            System.err.println("Could not stop the application");
+        } finally {
+            this.primarystage.close();   
+        }
+    }
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be
