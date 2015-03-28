@@ -17,12 +17,8 @@ public class Bridge {
     private ActiveRecord conn;
     
     public Bridge() {
-        
-    }
-    
-    public void initializeSQL(String tableName) {
         try {
-            conn = ActiveRecord.createConnection("org.sqlite.JDBC", "jdbc:sqlite:teachsticksdata.sqlite"); 
+            this.conn = ActiveRecord.createConnection("org.sqlite.JDBC", "jdbc:sqlite:teachsticksdata.sqlite"); 
             System.out.println("Initialized SQLite Support");
         } catch(SQLException e) {
             System.err.println("Could not initialize SQL support");
@@ -31,6 +27,7 @@ public class Bridge {
             Logger.getLogger(Bridge.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     /**
      * 
      * Application Endpoints

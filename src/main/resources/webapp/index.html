@@ -17,11 +17,12 @@ and open the template in the editor.
         <button id="get-details">Get Details</button>
         <div id="app-details"></div>
         <script type="text/javascript">
+            alert("This is a message that I would like to take note of");
             document.getElementById('activate').addEventListener('click', function() {
                 JFXBridge.activateApplication();
             });
             document.getElementById('init').addEventListener('click', function() {
-                JFXBridge.initializeSQL("Hello");
+                // JFXBridge.initializeSQL("Hello");
             });
             document.getElementById('get-details').addEventListener('click', function() {
                 document.getElementById('app-details').innerHTML = JFXBridge.getApplicationDetails();

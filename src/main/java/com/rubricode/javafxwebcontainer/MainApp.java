@@ -35,10 +35,17 @@ public class MainApp extends Application {
         primarystage.setScene(scene);
         primarystage.show();
     }
+
+    @Override
+    public void stop() throws Exception {
+        spark.Spark.stop();
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public void startServer() throws IOException {
+        port(9000);
         staticFileLocation("/webapp/");
-        get("/maven", new Route() {
+        get("/control", new Route() {
             @Override
             public Object handle(Request req, Response res) throws Exception {
                 return "Hello Maven";
@@ -48,13 +55,12 @@ public class MainApp extends Application {
     
     public void terminate() {
         try {
-            stop();
+            this.stop();
         } catch(Exception e) {
             System.err.println("Could not stop the application");
-        } finally {
-            this.primarystage.close();   
         }
     }
+    
     
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
