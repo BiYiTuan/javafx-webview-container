@@ -58,6 +58,8 @@ public class MainApp extends Application {
             this.stop();
         } catch(Exception e) {
             System.err.println("Could not stop the application");
+        } finally {
+            this.primarystage.close();
         }
     }
     
